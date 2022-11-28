@@ -152,4 +152,8 @@ $ yarn add -D -W eslint
 $ yarn server remove prettier
 $ yarn server remove eslint
 $ yarn client remove eslint
+$ yarn add -D -W typescript
+* typescriptはルートで管理する
+$ yarn server remove typescript
+$ yarn client remove typescript
 ```
