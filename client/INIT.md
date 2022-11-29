@@ -1,6 +1,6 @@
 ## ESLint
 ### client/tsconfig.json
-```json
+```diff
 {
   "compilerOptions": {
     "target": "es5",
@@ -177,7 +177,7 @@ Installing eslint-plugin-react@latest, eslint-config-standard-with-typescript@la
 }
 ```
 ### client/package.json
-```json
+```diff
   …
   "scripts": {
     "dev": "next dev",

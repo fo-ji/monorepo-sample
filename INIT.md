@@ -156,4 +156,6 @@ $ yarn add -D -W typescript
 * typescriptはルートで管理する
 $ yarn server remove typescript
 $ yarn client remove typescript
+$ yarn add -D -W prisma
+* prismaを利用するなら
 ```
