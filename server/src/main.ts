@@ -24,7 +24,7 @@ async function bootstrap() {
         secure: true,
       },
       // value: (req: Request) => req.header('csrf-token'),
-      value: (req: Request) => req.csrfToken(),
+      // value: (req: Request) => req.csrfToken(),
     })
   );
   await app.listen(process.env.PORT || 3300);
