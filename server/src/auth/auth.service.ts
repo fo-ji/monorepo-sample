@@ -3,12 +3,12 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import type { ConfigService } from '@nestjs/config';
-import type { JwtService } from '@nestjs/jwt';
 
+import { PrismaService } from '@/prisma/prisma.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
-import type { PrismaService } from '@/prisma/prisma.service';
 import type { User } from '@prisma/client';
 import type { AuthUser } from './interfaces/auth.interface';
 import type { AuthDto } from './dto/auth.dto';

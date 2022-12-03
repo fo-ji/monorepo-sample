@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import type { Response, Request } from 'express';
 
-import type { AuthService } from './auth.service';
+import { AuthService } from './auth.service';
 import type { CreateUserDto } from '@/user/dto/create-user.dto';
 import type { AuthDto } from './dto/auth.dto';
 import type { User } from '@prisma/client';
