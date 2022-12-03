@@ -316,3 +316,9 @@ $ docker exec -it client sh
 $ cd ..
 $ yarn client add react-error-boundary
 ```
+
+### axios
+```zsh
+$ docker exec -it client sh
+$ cd ..
+$ yarn client add axios
