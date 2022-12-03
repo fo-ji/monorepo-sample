@@ -298,3 +298,14 @@ $ yarn client remove eslint typescript
 - client/src/api
 - client/src/styles/Home.module.css
 ```
+
+## Prisma
+```zsh
+$ docker-exec -it client sh
+$ npx prisma init
+$ cd ..
+$ yarn client add @prisma/client
+$ cd client
+$ npx prisma db pull
+$ npx prisma generate
+```
