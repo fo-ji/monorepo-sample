@@ -301,11 +301,18 @@ $ yarn client remove eslint typescript
 
 ## Prisma
 ```zsh
-$ docker-exec -it client sh
+$ docker exec -it client sh
 $ npx prisma init
 $ cd ..
 $ yarn client add @prisma/client
 $ cd client
 $ npx prisma db pull
 $ npx prisma generate
+```
+
+### ErrorBoundary
+```zsh
+$ docker exec -it client sh
+$ cd ..
+$ yarn client add react-error-boundary
 ```
