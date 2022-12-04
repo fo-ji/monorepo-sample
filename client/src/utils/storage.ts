@@ -1,3 +1,4 @@
+// MEMO: 利用不可
 const storage = {
   getToken: (): string | null => {
     return JSON.parse(

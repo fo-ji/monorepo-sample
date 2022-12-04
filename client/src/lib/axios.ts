@@ -1,29 +1,33 @@
-import Axios, { AxiosRequestConfig } from 'axios';
+// import Axios, { AxiosRequestConfig } from 'axios';
+import Axios from 'axios';
 
 import { API_URL } from '@/config';
-import storage from '@/utils/storage';
+// import storage from '@/utils/storage';
 
-function authRequestInterceptor(config: AxiosRequestConfig) {
-  if (typeof window !== 'undefined') {
-    const token = storage.getToken();
+// function authRequestInterceptor(config: AxiosRequestConfig) {
+//   if (typeof window !== 'undefined') {
+//     const token = storage.getToken();
 
-    if (config.headers !== undefined) {
-      if (token !== null) {
-        config.headers['csrf-token'] = token;
-      }
-      config.headers.Accept = 'application/json';
-    }
-  }
+//     if (config.headers !== undefined) {
+//       if (token !== null) {
+//         config.headers['csrf-token'] = token;
+//       }
+//       config.headers.Accept = 'application/json';
+//     }
+//   }
 
-  return config;
-}
+//   return config;
+// }
 
 export const axios = Axios.create({
   baseURL: API_URL,
   withCredentials: true,
+  headers: {
+    Accept: 'application/json',
+  },
 });
 
-axios.interceptors.request.use(authRequestInterceptor);
+// axios.interceptors.request.use(authRequestInterceptor);
 // axios.interceptors.response.use(
 //   (response) => {
 //     console.log({ response });
