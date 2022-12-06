@@ -322,3 +322,91 @@ $ yarn client add react-error-boundary
 $ docker exec -it client sh
 $ cd ..
 $ yarn client add axios
+```
+
+### tailwind / HeadlessUI
+```zsh
+$ docker exec -it client sh
+$ cd ..
+$ yarn client add -D tailwindcss postcss autoprefixer
+$ cd client
+$ yarn tailwindcss init -p
+```
+#### tailwind.config.js
+```diff
+/** @type {import('tailwindcss').Config} */
+module.exports = {
++ content: [
++   './src/pages/**/*.{js,ts,jsx,tsx}',
++   './src/components/**/*.{js,ts,jsx,tsx}',
++   './src/features/**/*.{js,ts,jsx,tsx}',
++ ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+#### globals.scss
+```scss
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+```zsh
+$ yarn client add -D eslint-plugin-tailwindcss
+```
+#### .eslintrc.json
+```diff
+{
+  "env": {
+    "browser": true,
+    "es2022": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "standard-with-typescript",
+    "plugin:jsx-a11y/recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended",
+    "prettier",
++   "plugin:tailwindcss/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "tsconfigRootDir": ".",
+    "project": ["./tsconfig.json"],
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "jsx-a11y",
+    "react",
+    "react-hooks",
++   "tailwindcss"
+  ],
+
+  :
+  :
+
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
++   "tailwindcss": {
++     "groupByResponsive": true,
++     "whitelist": []
++   }
+  }
+}
+```
+
+### HeadlessUI
+```zsh
+$ docker exec -it client sh
+$ cd ..
+$ yarn client add @headlessui/react
+```

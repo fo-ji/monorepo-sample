@@ -12,7 +12,8 @@
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
     "plugin:react-hooks/recommended",
-    "prettier"
+    "prettier",
+    "plugin:tailwindcss/recommended"
   ],
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -24,7 +25,8 @@
     "@typescript-eslint",
     "jsx-a11y",
     "react",
-    "react-hooks"
+    "react-hooks",
+    "tailwindcss"
   ],
   "rules": {
     "padding-line-between-statements": [
@@ -111,6 +113,10 @@
   "settings": {
     "react": {
       "version": "detect"
+    },
+    "tailwindcss": {
+      "groupByResponsive": true,
+      "whitelist": []
     }
   }
 }
