@@ -159,7 +159,12 @@ Installing eslint-plugin-react@latest, eslint-config-standard-with-typescript@la
         }
       }
     ],
-    "react/display-name": "off"
+    "react/display-name": "off",
+    "jsx-a11y/anchor-is-valid": [ "error", {
+      "components": [ "Link" ],
+      "specialLink": [ "hrefLeft", "hrefRight" ],
+      "aspects": [ "invalidHref", "preferButton" ]
+    }]
   },
   "overrides": [
     {
@@ -409,4 +414,11 @@ $ yarn client add -D eslint-plugin-tailwindcss
 $ docker exec -it client sh
 $ cd ..
 $ yarn client add @headlessui/react
+```
+
+### RHF & zod
+```zsh
+$ docker exec -it client sh
+$ cd ..
+$ yarn client add react-hook-form zod @hookform/resolvers
 ```
