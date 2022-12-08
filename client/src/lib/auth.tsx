@@ -4,9 +4,7 @@ import type { FC, PropsWithChildren } from 'react';
 import { axios } from './axios';
 
 interface AuthDto {
-  data: {
-    csrfToken: string;
-  };
+  csrfToken: string;
 }
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -17,9 +15,9 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   }, []);
 
   const getCsrfToken = async (): Promise<string> => {
-    const { data }: AuthDto = await axios.get('/auth/csrf');
+    const { csrfToken }: AuthDto = await axios.get('/auth/csrf');
 
-    return data.csrfToken;
+    return csrfToken;
   };
 
   return <>{children}</>;

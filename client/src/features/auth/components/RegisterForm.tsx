@@ -2,7 +2,6 @@ import type { FC } from 'react';
 import * as z from 'zod';
 import { Button } from '@/components/Elements/Button';
 import { Form, InputField } from '@/components/Form';
-import type { RegisterCredentialsDTO } from '../api/register';
 import { useRegister } from '../api/register';
 
 const schema = z.object({
@@ -21,6 +20,12 @@ const schema = z.object({
     .regex(/^[A-Za-z0-9]*$/, { message: '半角英数字で入力してください' }),
 });
 
+type RegisterValues = {
+  name: string;
+  email: string;
+  password: string;
+};
+
 interface RegisterFormProps {
   onSuccess: (id: string) => void;
 }
@@ -30,9 +35,9 @@ export const RegisterForm: FC<RegisterFormProps> = ({ onSuccess }) => {
 
   return (
     <div className="p-20">
-      <Form<RegisterCredentialsDTO['data'], typeof schema>
+      <Form<RegisterValues, typeof schema>
         onSubmit={async (values) => {
-          const user = await register({ data: values });
+          const user = await register(values);
           onSuccess(user.id);
         }}
         schema={schema}
