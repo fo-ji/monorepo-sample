@@ -23,9 +23,6 @@ async function bootstrap() {
         sameSite: 'none',
         secure: true,
       },
-      // value: (req: Request) => req.header('csrf-token'),
-      // value: (req: Request) => req.header('csrf-token') ?? '',
-      // value: (req: Request) => req.csrfToken(),
       value: (req: Request) => {
         console.log({ req });
         return req.header('XSRF-TOKEN') ?? '';

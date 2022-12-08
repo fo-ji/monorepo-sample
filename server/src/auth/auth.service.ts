@@ -9,10 +9,10 @@ import * as bcrypt from 'bcrypt';
 
 import { PrismaService } from '@/prisma/prisma.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
-import type { User } from '@prisma/client';
-import type { AuthUser } from './interfaces/auth.interface';
-import type { AuthDto } from './dto/auth.dto';
-import type { CreateUserDto } from '@/user/dto/create-user.dto';
+import { User } from '@prisma/client';
+import { AuthUser } from './interfaces/auth.interface';
+import { AuthDto } from './dto/auth.dto';
+import { CreateUserDto } from '@/user/dto/create-user.dto';
 
 @Injectable()
 export class AuthService {
