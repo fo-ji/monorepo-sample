@@ -23,10 +23,7 @@ async function bootstrap() {
         sameSite: 'none',
         secure: true,
       },
-      value: (req: Request) => {
-        console.log({ req });
-        return req.header('XSRF-TOKEN') ?? '';
-      },
+      value: (req: Request) => req.header('XSRF-TOKEN') ?? '',
     })
   );
   await app.listen(process.env.PORT || 3300);

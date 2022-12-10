@@ -7,6 +7,7 @@ import {
   Res,
   Req,
   Get,
+  UseGuards,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 
@@ -15,6 +16,7 @@ import { CreateUserDto } from '@/user/dto/create-user.dto';
 import { AuthDto } from './dto/auth.dto';
 import { User } from '@prisma/client';
 import { Csrf } from './interfaces/auth.interface';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
@@ -23,6 +25,12 @@ export class AuthController {
   @Get('csrf')
   getCsrfToken(@Req() req: Request): Csrf {
     return { csrfToken: req.csrfToken() };
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('me')
+  getLogInUser(@Req() req: Request): User | undefined {
+    return req.user;
   }
 
   @Post('signup')

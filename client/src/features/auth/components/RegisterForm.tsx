@@ -2,6 +2,7 @@ import type { FC } from 'react';
 import * as z from 'zod';
 import { Button } from '@/components/Elements/Button';
 import { Form, InputField } from '@/components/Form';
+import { useLogIn } from '../api/logIn';
 import { useRegister } from '../api/register';
 
 const schema = z.object({
@@ -32,12 +33,19 @@ interface RegisterFormProps {
 
 export const RegisterForm: FC<RegisterFormProps> = ({ onSuccess }) => {
   const { register } = useRegister();
+  const { logIn } = useLogIn();
 
   return (
     <div className="p-20">
       <Form<RegisterValues, typeof schema>
         onSubmit={async (values) => {
-          const user = await register(values);
+          // MEMO: 自動ログイン これで良いのか
+          // const user = await register(values);
+          await register(values);
+          const user = await logIn({
+            email: values.email,
+            password: values.password,
+          });
           onSuccess(user.id);
         }}
         schema={schema}

@@ -1,36 +1,37 @@
-// import { GetServerSideProps } from 'next';
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { Button } from '@/components/Elements/Button';
 import { Link } from '@/components/Elements/Link';
+import { useLogOut } from '@/features/auth/api/logOut';
+import { useAuth } from '@/lib/auth';
 
-// TODO: SSRの実装
-// export const getServerSideProps: GetServerSideProps = async (ctx) => {
-//   const { userId } = ctx.params;
-//   const { user } = await getUser(userId);
-
-//   if (!user) {
-//     return {
-//       redirect: {
-//         destination: '/login',
-//         permanent: false,
-//       },
-//     };
-//   }
-
-//   return {
-//     props: { user },
-//   };
-// };
-
-// TODO: ログアウトの実装
 const MyPage: NextPage = () => {
-  // const MyPage: NextPage = ({ user }) => {
-  // console.log({ user });
+  const { user } = useAuth();
+  const { logOut } = useLogOut();
+  const router = useRouter();
+
+  if (router.query.userId !== user?.id) return <div>unAuth..</div>;
 
   return (
     <div className="p-10">
       <h1 className="text-center text-gray-800">MyPage</h1>
-      <div>{/* <p>{user.name}</p> */}</div>
-      <Link href="/">Top</Link>
+      <div className="text-right">
+        <p>
+          <span>ユーザー名：</span>
+          <span>{user?.name}</span>
+        </p>
+      </div>
+      <div className="flex gap-10">
+        <Link href="/">Top</Link>
+        <Button
+          onClick={async () => {
+            await logOut();
+            await router.push('/');
+          }}
+        >
+          LogOut
+        </Button>
+      </div>
     </div>
   );
 };
