@@ -34,8 +34,8 @@ export class AuthController {
   }
 
   @Post('signup')
-  signUp(@Body() dto: CreateUserDto): Promise<User> {
-    return this.authService.signUp(dto);
+  signUp(@Body() dto: CreateUserDto): void {
+    this.authService.signUp(dto);
   }
 
   @HttpCode(HttpStatus.OK)

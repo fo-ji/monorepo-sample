@@ -9,7 +9,6 @@ import * as bcrypt from 'bcrypt';
 
 import { PrismaService } from '@/prisma/prisma.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
-import { User } from '@prisma/client';
 import { AuthUser } from './interfaces/auth.interface';
 import { AuthDto } from './dto/auth.dto';
 import { CreateUserDto } from '@/user/dto/create-user.dto';
@@ -22,22 +21,20 @@ export class AuthService {
     private readonly configService: ConfigService
   ) {}
 
-  async signUp(dto: CreateUserDto): Promise<User> {
+  async signUp(dto: CreateUserDto): Promise<void> {
     const { name, email, password } = dto;
 
     const salt = await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(password, salt);
 
     try {
-      const user = await this.prismaService.user.create({
+      await this.prismaService.user.create({
         data: {
           name,
           email,
           password: hashPassword,
         },
       });
-
-      return user;
     } catch (error) {
       if (
         error instanceof PrismaClientKnownRequestError &&
