@@ -98,3 +98,36 @@ $ docker exec -it server sh
 $ cd ..
 $ yarn server add @nestjs/config
 ```
+
+## db:seed
+### package.json
+```diff
+{
+  :
+  :
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  },
++ "prisma": {
++   "seed": "ts-node prisma/seed/seed.ts"
++ }
+}
+```
+```zsh
+$ docker exec -it server sh
+$ npx prisma db seed
+```
