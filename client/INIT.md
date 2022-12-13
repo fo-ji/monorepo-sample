@@ -422,3 +422,10 @@ $ docker exec -it client sh
 $ cd ..
 $ yarn client add react-hook-form zod @hookform/resolvers
 ```
+
+### react-query
+```zsh
+$ docker exec -it client sh
+$ cd ..
+$ yarn client add @tanstack/react-query @tanstack/react-query-devtools
+```
