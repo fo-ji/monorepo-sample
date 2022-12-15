@@ -1,5 +1,18 @@
-import { Controller, Get } from '@nestjs/common';
-import { Post } from '@prisma/client';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { Post as PostModel } from '@prisma/client';
+import { Request } from 'express';
+import { CreatePostDto } from './dto/create-post';
+import { UpdatePostDto } from './dto/update-post';
 import { PostsService } from './posts.service';
 
 @Controller('posts')
@@ -7,7 +20,37 @@ export class PostsController {
   constructor(private readonly postService: PostsService) {}
 
   @Get()
-  getPosts(): Promise<Post[]> {
+  getPosts(): Promise<PostModel[]> {
     return this.postService.getPosts();
+  }
+
+  @Get(':id')
+  getMyPostById(@Param('id') postId: string): Promise<PostModel | null> {
+    return this.postService.getMyPostById(postId);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('me/:userId')
+  getMyPosts(@Param('userId') userId: string): Promise<PostModel[]> {
+    return this.postService.getMyPosts(userId);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('new')
+  createPost(
+    @Req() req: Request,
+    @Body() dto: CreatePostDto
+  ): Promise<PostModel> {
+    return this.postService.createPost(dto, req.user?.id);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Patch(':id')
+  updatePost(
+    @Req() req: Request,
+    @Param('id') postId: string,
+    @Body() dto: UpdatePostDto
+  ): Promise<PostModel> {
+    return this.postService.updatePost(postId, dto, req.user?.id);
   }
 }
