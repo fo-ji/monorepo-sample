@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { Link } from '@/components/Elements/Link';
+import { Link } from '@/components/Elements';
 import { RegisterForm } from '@/features/auth/components/RegisterForm';
 
 const SignUp: NextPage = () => {

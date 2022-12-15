@@ -1,8 +1,7 @@
 import type { NextPage } from 'next';
-import { Button } from '@/components/Elements/Button';
-import { Link } from '@/components/Elements/Link';
-import { PostsList } from '@/features/posts/components/PostsList';
+import { Button, Link } from '@/components/Elements';
 import { useLogOut } from '@/features/auth/api/logOut';
+import { PostsList } from '@/features/posts/components';
 
 const Home: NextPage = () => {
   const { logOut } = useLogOut(); // for test

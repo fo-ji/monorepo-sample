@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import * as z from 'zod';
-import { Button } from '@/components/Elements/Button';
+import { Button } from '@/components/Elements';
 import { Form, InputField } from '@/components/Form';
 import { useLogIn } from '../api/logIn';
 
