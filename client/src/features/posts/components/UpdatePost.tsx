@@ -6,7 +6,8 @@ import { Button } from '@/components/Elements';
 import { Form, InputField, TextAreaField } from '@/components/Form';
 
 import { usePost } from '../api/getPost';
-import { UpdatePostDTO, useUpdatePost } from '../api/updatePost';
+import { useUpdatePost } from '../api/updatePost';
+import type { UpdatePostDTO } from '../api/updatePost';
 
 const schema = z.object({
   title: z.string().min(1, { message: '必須項目です' }),
@@ -22,8 +23,7 @@ export const UpdatePost: FC<UpdatePostProps> = ({ postId }) => {
   const updatePostMutation = useUpdatePost();
   const router = useRouter();
 
-  // FIXME: 初期値が入らない時がある
-  // postQuery.dataがundefinedになってから、値が入る
+  if (postQuery.data === undefined) return null;
 
   return (
     <Form<UpdatePostDTO['data'], typeof schema>

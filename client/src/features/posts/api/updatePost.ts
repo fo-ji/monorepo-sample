@@ -1,7 +1,7 @@
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 
 import { AxiosError } from 'axios';
-import { Post } from 'prisma/prisma-client';
+import type { Post } from 'prisma/prisma-client';
 import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 
@@ -43,7 +43,7 @@ export const useUpdatePost = ({
 
       queryClient.setQueryData(['post', updatingPost.postId], {
         id: updatingPost.postId,
-        ...updatingPost,
+        ...updatingPost.data,
         ...previousPost,
       });
 

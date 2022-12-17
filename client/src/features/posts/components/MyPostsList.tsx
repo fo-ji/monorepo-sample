@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import type { Post } from '@prisma/client';
 import { Link, Table } from '@/components/Elements';
 import { useMyPosts } from '../api/getMyPosts';
@@ -10,11 +10,11 @@ interface MyPostsListProps {
 export const MyPostsList: FC<MyPostsListProps> = ({ userId }) => {
   const myPostsQuery = useMyPosts({ userId });
 
-  if (myPostsQuery?.data?.length === 0) {
+  if (myPostsQuery.data === undefined) return null;
+
+  if (myPostsQuery.data.length === 0) {
     return <div>記事がありません</div>;
   }
-
-  console.log({ myPostsQuery });
 
   return (
     <Table<Post>
