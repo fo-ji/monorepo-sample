@@ -2,6 +2,7 @@ import type { FC } from 'react';
 import type { Post } from '@prisma/client';
 import { Link, Table } from '@/components/Elements';
 import { useMyPosts } from '../api/getMyPosts';
+import { DeletePost } from './DeletePost';
 
 interface MyPostsListProps {
   userId: string;
@@ -30,6 +31,14 @@ export const MyPostsList: FC<MyPostsListProps> = ({ userId }) => {
         },
         { title: 'Title', field: 'title' },
         { title: 'Created_At', field: 'createdAt' },
+        {
+          title: '',
+          field: 'id',
+          Cell({ entry: { id } }) {
+            // TODO: ./${userId}/posts/xxxxx
+            return <DeletePost postId={id} userId={userId} />;
+          },
+        },
       ]}
     />
   );

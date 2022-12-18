@@ -1,7 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Patch,
   Post,
@@ -52,5 +55,12 @@ export class PostsController {
     @Body() dto: UpdatePostDto
   ): Promise<PostModel> {
     return this.postService.updatePost(postId, dto, req.user?.id);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Delete(':id')
+  deletePost(@Req() req: Request, @Param('id') postId: string): Promise<void> {
+    return this.postService.deletePost(postId, req.user?.id);
   }
 }
