@@ -6,8 +6,10 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -23,8 +25,14 @@ export class PostsController {
   constructor(private readonly postService: PostsService) {}
 
   @Get()
-  getPosts(): Promise<PostModel[]> {
-    return this.postService.getPosts();
+  getPosts(
+    @Query('take', ParseIntPipe) take: number,
+    @Query('cursorId') cursorId: string
+  ): Promise<PostModel[]> {
+    console.log({ take });
+    console.log({ cursorId });
+
+    return this.postService.getPosts(take, cursorId);
   }
 
   @Get(':id')

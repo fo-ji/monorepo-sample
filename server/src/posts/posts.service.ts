@@ -12,8 +12,21 @@ import { UpdatePostDto } from './dto/update-post';
 export class PostsService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  getPosts(): Promise<Post[]> {
-    return this.prismaService.post.findMany();
+  getPosts(take: number, cursorId: string): Promise<Post[]> {
+    if (cursorId) {
+      return this.prismaService.post.findMany({
+        skip: 1,
+        take,
+        cursor: {
+          id: cursorId,
+        },
+      });
+    } else {
+      return this.prismaService.post.findMany({
+        skip: 1,
+        take,
+      });
+    }
   }
 
   async getMyPostById(postId: string): Promise<Post | null> {
