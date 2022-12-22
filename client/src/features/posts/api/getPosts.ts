@@ -1,6 +1,6 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 
-import { Post } from 'prisma/prisma-client';
+import type { Post } from 'prisma/prisma-client';
 import type { Page } from '@/hooks/usePaginate';
 import { axios } from '@/lib/axios';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
@@ -8,10 +8,7 @@ import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
 export const getPosts = async ({
   take,
   cursorId,
-}: Omit<Page, 'id'>): Promise<Post[]> => {
-  console.log({ take });
-  console.log({ cursorId });
-
+}: Omit<Page, 'num'>): Promise<Post[]> => {
   return await axios.get('/posts', {
     params: {
       take,
@@ -32,9 +29,9 @@ export const usePosts = ({
   config,
 }: UsePostsOptions): UseQueryResult<Post[], unknown> => {
   return useQuery<ExtractFnReturnType<QueryFnType>>({
-    queryKey: ['posts', page.id],
+    queryKey: ['posts', page.num],
     queryFn: async () => await getPosts(page),
-    // keepPreviousData: true,
+    keepPreviousData: true,
     ...config,
   });
 };

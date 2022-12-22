@@ -15,16 +15,21 @@ export class PostsService {
   getPosts(take: number, cursorId: string): Promise<Post[]> {
     if (cursorId) {
       return this.prismaService.post.findMany({
-        skip: 1,
         take,
+        skip: 1,
         cursor: {
           id: cursorId,
+        },
+        orderBy: {
+          id: 'asc',
         },
       });
     } else {
       return this.prismaService.post.findMany({
-        skip: 1,
         take,
+        orderBy: {
+          id: 'asc',
+        },
       });
     }
   }

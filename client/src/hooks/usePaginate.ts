@@ -1,54 +1,53 @@
 import { useCallback, useState } from 'react';
 
-import { Post } from '@prisma/client';
+import type { Post } from '@prisma/client';
 import type { AxiosRequestConfig } from 'axios';
 
-import { nanoid } from 'nanoid';
-
-export type Page = {
-  id: string;
+export interface Page extends AxiosRequestConfig {
+  num: number;
   take: number;
-  cursorId: string;
-} & AxiosRequestConfig;
+  cursorId: string | undefined;
+}
 
-export type Models = Post[];
+export type Model = Post;
+
+export type PageActionType = 'next' | 'prev';
 
 interface UsePagenateReturnType {
   page: Page;
-  // FIXME: dataを動的に設定したい
-  setNextPage: (data: Models) => void;
-  setPrevPage: (data: Models) => void;
+  toggle: (type: PageActionType, data: Model[]) => void;
 }
 
 export const usePaginate = (): UsePagenateReturnType => {
-  const [page, setPage] = useState({
-    id: nanoid(),
-    take: 10,
-    cursorId: '',
+  const [page, setPage] = useState<Page>({
+    num: 0,
+    take: 3,
+    cursorId: undefined,
   });
 
-  // TODO: 関数をまとめても良いかもしれない
-  // TODO: マイナスはサーバー側でparseIntPipeすると整数に戻るっぽいので、仕組み変えた方が良さそう
+  // TODO: useReducerを利用しても良いかもしれない
+  const toggle = useCallback((type: PageActionType, data: Model[]) => {
+    switch (type) {
+      case 'next':
+        setPage((prevState) => ({
+          num: prevState.num + 1,
+          take: Math.abs(prevState.take),
+          cursorId: data.at(-1)?.id,
+        }));
+        break;
+      case 'prev':
+        setPage((prevState) => ({
+          num: prevState.num - 1,
+          take: -Math.abs(prevState.take),
+          cursorId: data.at(0)?.id,
+        }));
+        break;
+      default: {
+        const _: never = type;
+        break;
+      }
+    }
+  }, []);
 
-  const setNextPage = useCallback(
-    (data: Models) =>
-      setPage((prevState) => ({
-        id: nanoid(),
-        take: Math.abs(prevState.take),
-        cursorId: data.at(-1)?.id ?? '',
-      })),
-    []
-  );
-
-  const setPrevPage = useCallback(
-    (data: Models) =>
-      setPage((prevState) => ({
-        id: nanoid(),
-        take: -Math.abs(prevState.take),
-        cursorId: data.at(-1)?.id ?? '',
-      })),
-    []
-  );
-
-  return { page, setNextPage, setPrevPage };
+  return { page, toggle };
 };

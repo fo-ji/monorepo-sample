@@ -29,9 +29,6 @@ export class PostsController {
     @Query('take', ParseIntPipe) take: number,
     @Query('cursorId') cursorId: string
   ): Promise<PostModel[]> {
-    console.log({ take });
-    console.log({ cursorId });
-
     return this.postService.getPosts(take, cursorId);
   }
 

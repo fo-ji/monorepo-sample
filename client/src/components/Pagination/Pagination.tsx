@@ -1,28 +1,31 @@
-import type { FC } from 'react';
 import { Button } from '@/components/Elements';
-import type { Models } from '@/hooks/usePaginate';
+import type { Model, Page, PageActionType } from '@/hooks/usePaginate';
 
-import { usePaginate } from '@/hooks/usePaginate';
-
-interface PaginationProps {
-  data: Models;
+interface PaginationProps<TModel> {
+  data: TModel[];
+  page: Page;
+  toggle: (type: PageActionType, data: TModel[]) => void;
 }
 
-export const Pagination: FC<PaginationProps> = ({ data }) => {
-  const { setNextPage, setPrevPage } = usePaginate();
-
-  return (
-    <div className="mx-auto max-w-2xl">
-      <nav aria-label="Page navigation example">
-        <ul className="inline-flex -space-x-px">
+export const Pagination = <TModel extends Model>({
+  data,
+  page,
+  toggle,
+}: PaginationProps<TModel>): JSX.Element => (
+  <div className="mx-auto max-w-2xl">
+    <nav>
+      <ul className="inline-flex -space-x-px">
+        {page.num !== 0 && (
           <li>
-            <Button onClick={() => setPrevPage(data)}>Prev</Button>
+            <Button onClick={() => toggle('prev', data)}>Prev</Button>
           </li>
+        )}
+        {data.length === Math.abs(page.take) && (
           <li>
-            <Button onClick={() => setNextPage(data)}>Next</Button>
+            <Button onClick={() => toggle('next', data)}>Prev</Button>
           </li>
-        </ul>
-      </nav>
-    </div>
-  );
-};
+        )}
+      </ul>
+    </nav>
+  </div>
+);
