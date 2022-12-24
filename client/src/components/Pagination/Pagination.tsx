@@ -17,12 +17,12 @@ export const Pagination = <TModel extends Model>({
       <ul className="inline-flex -space-x-px">
         {page.num !== 0 && (
           <li>
-            <Button onClick={() => toggle('prev', data)}>Prev</Button>
+            <Button onClick={() => toggle('prev', data)}>←Prev</Button>
           </li>
         )}
         {data.length === Math.abs(page.take) && (
           <li>
-            <Button onClick={() => toggle('next', data)}>Prev</Button>
+            <Button onClick={() => toggle('next', data)}>Next→</Button>
           </li>
         )}
       </ul>
