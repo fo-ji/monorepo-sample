@@ -42,10 +42,13 @@ export class PostsService {
     });
   }
 
-  async getMyPosts(userId: string): Promise<Post[]> {
+  async getMyPosts(userId: string, keyword: string): Promise<Post[]> {
     return await this.prismaService.post.findMany({
       where: {
         userId,
+        title: {
+          contains: keyword,
+        },
       },
     });
   }

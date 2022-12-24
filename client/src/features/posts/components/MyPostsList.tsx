@@ -6,16 +6,13 @@ import { DeletePost } from './DeletePost';
 
 interface MyPostsListProps {
   userId: string;
+  keyword: string;
 }
 
-export const MyPostsList: FC<MyPostsListProps> = ({ userId }) => {
-  const myPostsQuery = useMyPosts({ userId });
+export const MyPostsList: FC<MyPostsListProps> = ({ userId, keyword }) => {
+  const myPostsQuery = useMyPosts({ userId, keyword });
 
   if (myPostsQuery.data === undefined) return null;
-
-  if (myPostsQuery.data.length === 0) {
-    return <div>記事がありません</div>;
-  }
 
   return (
     <Table<Post>

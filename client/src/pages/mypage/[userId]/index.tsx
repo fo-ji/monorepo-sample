@@ -1,13 +1,15 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { Button, Link } from '@/components/Elements';
+import { Button, Link, SearchInput } from '@/components/Elements';
 import { useLogOut } from '@/features/auth/api/logOut';
 import { CreatePost, MyPostsList } from '@/features/posts/components';
+import { useSearchKeyword } from '@/hooks/useSearchKeyword';
 import { useAuth } from '@/lib/auth';
 
 const MyPage: NextPage = () => {
   const { user } = useAuth();
   const { logOut } = useLogOut();
+  const { keyword, search } = useSearchKeyword();
   const router = useRouter();
 
   // TODO: login redirect
@@ -37,8 +39,9 @@ const MyPage: NextPage = () => {
       {user !== undefined && (
         <div className="flex flex-col gap-10">
           <div className="text-center">
+            <SearchInput keyword={keyword} onChange={search} />
             <h2 className="text-xl font-bold text-blue-500">一覧</h2>
-            <MyPostsList userId={user.id} />
+            <MyPostsList userId={user.id} keyword={keyword} />
           </div>
           <div className="text-center">
             <h2 className="text-xl font-bold text-blue-500">新規作成</h2>

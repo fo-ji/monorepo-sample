@@ -39,8 +39,11 @@ export class PostsController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('me/:userId')
-  getMyPosts(@Param('userId') userId: string): Promise<PostModel[]> {
-    return this.postService.getMyPosts(userId);
+  getMyPosts(
+    @Param('userId') userId: string,
+    @Query('keyword') keyword: string
+  ): Promise<PostModel[]> {
+    return this.postService.getMyPosts(userId, keyword);
   }
 
   @UseGuards(AuthGuard('jwt'))
